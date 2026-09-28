@@ -27,8 +27,8 @@ backend.
 - Node.js 18.17+
 - An AWS account with **Amazon Bedrock model access enabled** for a Claude
   model (Bedrock console → Model access). This demo defaults to the Claude
-  3.5 Sonnet cross-region inference profile
-  (`us.anthropic.claude-3-5-sonnet-20241022-v2:0`) — change `MODEL_ID` in
+  4.5 Sonnet cross-region inference profile
+  (`us.anthropic.claude-sonnet-4-5-20250929-v1:0`) — change `MODEL_ID` in
   `app/api/chat/route.ts` if you've enabled a different model or region.
 - AWS credentials with `bedrock:InvokeModelWithResponseStream` permission.
 
@@ -64,3 +64,12 @@ next.config.js
 - For production use, add request validation, rate limiting, and move the
   model ID / inference config behind environment variables rather than a
   hardcoded constant.
+
+
+# AWS SECURITY NOTE
+
+.env.local contains real AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) and must never be committed to version control. It is already excluded via .gitignore. Do not paste real credentials into .env.local.example — that file is a template only, meant to show which variables are required.
+
+If you believe AWS credentials have ever been committed or exposed (e.g., pushed to a public repo, pasted into a chat, or shared in a screenshot), rotate them immediately in the IAM console — deactivate the old access key and generate a new one — rather than assuming exposure is harmless.
+
+For anything beyond local development, prefer a scoped IAM role or short-lived credentials (e.g., via AWS SSO / STS) over long-lived access keys in a file at all.
